@@ -18,7 +18,9 @@
 		</a-marker>
 		<a-entity camera></a-entity>
 		</a-scene>
-		
+	<div id="direction-pad"></div>		
+	<div id="camera-pad"></div>
+	<div id="laser-pad"></div>	
 		<script>
 		   WebSocketURL = 'ws://192.168.1.147:7681'
 
@@ -33,14 +35,14 @@
                     console.log('event triggered:' + command);
              }
              
-             
-            
+                        
             var directionPad = nipplejs.create({
+ 		zone: document.getElementById("direction-pad"),
                 mode: 'static',
-                catchDistance: 150,
-                position: {left: '10%', bottom: '10%'},
+                catchDistance: 50,
+                position: {left: '90%', bottom: '10%'},
                 color: 'white'
-            });
+           });
             
             var direction = 1;
             var upDownMode = false;
@@ -77,6 +79,54 @@
                 upDownMode = false;
                 RobotCommand("motor 0 0\n");
             });
+            
+            var cameraPad = nipplejs.create({
+					       zone: document.getElementById("camera-pad"),
+                                               mode: 'static',
+                                               catchDistance: 50,
+                                               position: {left: '10%', bottom: '10%'},
+                                               color: 'white'
+           });
+           
+	   var cam_dir = 1;
+	   var cam_active = true; 
+           cameraPad.on('dir:up', function (evt, data) {
+                            console.log("CAM UP");
+			    cam_dir = 1;
+			    cam_active = true;
+                            });
+           cameraPad.on('dir:down', function (evt, data) {
+                            console.log("CAM DOWN");
+			    cam_dir = -1;
+			    cam_active = true;
+                            });
+            cameraPad.on('dir:left', function (evt, data) {
+			    cam_active = false;
+                            }); 
+             cameraPad.on('dir:right', function (evt, data) {
+			    cam_active = false;
+                            }); 
+            cameraPad.on('move', function (evt, data) {
+			    if(cam_active){
+			    if(cam_dir == 1) RobotCommand("camera up\n");	
+			    if(cam_dir == -1) RobotCommand("camera down\n");	
+			    }
+                            }); 
+                
+
+ 
+             var LaserPad = nipplejs.create({
+ 			    zone: document.getElementById("laser-pad"),
+                            mode: 'static',
+                            size: 50,
+                            catchDistance: 50,
+                            position: {left: '10%', top: '10%'},
+                            color: 'red'
+			   });
+            LaserPad.on('move', function (evt, data) {
+                            console.log("LASER TOGGLE");
+                            RobotCommand("laser\n");
+                            });
             
             
         </script>
