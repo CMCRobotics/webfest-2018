@@ -5601,7 +5601,8 @@ ARjs.Profile.prototype._guessPerformanceLabel = function() {
 ARjs.Profile.prototype.reset = function () {
 	this.sourceParameters = {
 		// to read from the webcam 
-		sourceType : 'webcam',
+		sourceType : 'image',
+        sourceUrl : 'http://192.168.1.140:8080'
 	}
 
 	this.contextParameters = {
@@ -5747,9 +5748,9 @@ ARjs.Source = THREEx.ArToolkitSource = function(parameters){
 	// handle default parameters
 	this.parameters = {
 		// type of source - ['webcam', 'image', 'video']
-		sourceType : 'webcam',
+		sourceType : 'image',
 		// url of the source - valid if sourceType = image|video
-		sourceUrl : null,
+        sourceUrl : 'http://192.168.1.140:8080',
 		
 		// resolution of at which we initialize in the source image
 		sourceWidth: 640,

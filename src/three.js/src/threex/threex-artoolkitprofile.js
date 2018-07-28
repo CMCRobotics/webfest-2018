@@ -40,7 +40,8 @@ ARjs.Profile.prototype._guessPerformanceLabel = function() {
 ARjs.Profile.prototype.reset = function () {
 	this.sourceParameters = {
 		// to read from the webcam 
-		sourceType : 'webcam',
+		sourceType : 'image',
+        sourceUrl : 'http://192.168.1.140:8080'
 	}
 
 	this.contextParameters = {
