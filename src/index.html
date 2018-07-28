@@ -1,14 +1,21 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>RobotInspector</title>
-  <base href="/">
+	<script src="/assets/aframe.min.js"></script>
+	<script src="/assets/aframe-ar.js"> </script>
+	<head>
+	  <meta charset="utf-8">
+	  <title>RobotInspector</title>
+	  <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="icon" type="image/x-icon" href="favicon.ico">
+	</head>
+	<body style='margin : 0px; overflow: hidden;'>
+		<a-scene embedded arjs>
+		<a-marker preset="hiro">
+		    <a-box position='0 0.5 0' material='color: black;'></a-box>
+		</a-marker>
+		<a-entity camera></a-entity>
+		</a-scene>
+	</body>
 </html>
