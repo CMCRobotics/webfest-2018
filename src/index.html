@@ -2,6 +2,7 @@
 <html lang="en">
 	<script src="/assets/aframe.min.js"></script>
 	<script src="/assets/aframe-ar.js"> </script>
+	<script src="/assets/nipplejs.js"> </script>
 	<head>
 	  <meta charset="utf-8">
 	  <title>RobotInspector</title>
@@ -17,5 +18,67 @@
 		</a-marker>
 		<a-entity camera></a-entity>
 		</a-scene>
+		
+		<script>
+		   WebSocketURL = 'ws://192.168.1.147:7681'
+
+           ws = new WebSocket(WebSocketURL);
+
+           ws.onopen = function(event) {
+            console.log('ws connection opened:' + this.WebSocketURL);
+           }
+
+            function RobotCommand(command) {
+                    ws.send(command);
+                    console.log('event triggered:' + command);
+             }
+             
+             
+            
+            var directionPad = nipplejs.create({
+                mode: 'static',
+                catchDistance: 150,
+                position: {left: '10%', bottom: '10%'},
+                color: 'white'
+            });
+            
+            var direction = 1;
+            var upDownMode = false;
+            
+            directionPad.on('dir:up', function (evt, data) {
+                console.log("DIR forward");
+                upDownMode = true;
+                direction = 1;
+            });
+            directionPad.on('dir:down', function (evt, data) {
+                console.log("DIR backward");
+                upDownMode = true;
+                direction = -1;
+            });
+            directionPad.on('move', function (evt, data) {
+                if(upDownMode){
+                    var speed = (data.distance * 2 ) + 50;
+                    console.log("MOVE at speed ", speed * direction);
+                    RobotCommand("motor "+speed * direction+" "+speed * direction+"\n");
+                }
+            });
+            directionPad.on('dir:left', function (evt, data) {
+                console.log("PIVOT left");
+                upDownMode = false;
+                RobotCommand("motor -60 60\n");
+           });
+            directionPad.on('dir:right', function (evt, data) {
+                console.log("PIVOT right");
+                upDownMode = false;
+                RobotCommand("motor 60 -60\n");
+            });
+            directionPad.on('end', function (evt, data) {
+                console.log(evt.type,"motor 0 0\n");
+                upDownMode = false;
+                RobotCommand("motor 0 0\n");
+            });
+            
+            
+        </script>
 	</body>
 </html>
