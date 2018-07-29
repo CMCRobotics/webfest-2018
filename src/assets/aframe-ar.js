@@ -5602,7 +5602,7 @@ ARjs.Profile.prototype.reset = function () {
 	this.sourceParameters = {
 		// to read from the webcam 
 		sourceType : 'image',
-        sourceUrl : 'http://192.168.1.140:8080'
+        sourceUrl : 'http://192.168.1.121:8080'
 	}
 
 	this.contextParameters = {
@@ -5750,7 +5750,7 @@ ARjs.Source = THREEx.ArToolkitSource = function(parameters){
 		// type of source - ['webcam', 'image', 'video']
 		sourceType : 'image',
 		// url of the source - valid if sourceType = image|video
-        sourceUrl : 'http://192.168.1.140:8080',
+        sourceUrl : 'http://192.168.1.121:8080',
 		
 		// resolution of at which we initialize in the source image
 		sourceWidth: 640,
